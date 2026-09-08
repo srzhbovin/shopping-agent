@@ -1,0 +1,20 @@
+[
+  {"review_id":"R-001-1","product_id":"DEMO-HK-001","rating":5,"title":"Тише прошлого","text":"Блендер работает заметно тише старого, кожух действительно гасит шум. Для супов мощности хватает.","verified_purchase":true},
+  {"review_id":"R-001-2","product_id":"DEMO-HK-001","rating":4,"title":"Удобно мыть","text":"Чаша легко моется, ножевой блок снимается. На максимальной скорости небольшой шум всё же есть.","verified_purchase":true},
+  {"review_id":"R-001-3","product_id":"DEMO-HK-001","rating":2,"title":"Не совсем бесшумный","text":"Ожидал полной тишины, но лёд измельчает довольно шумно.","verified_purchase":true},
+  {"review_id":"R-002-1","product_id":"DEMO-HK-002","rating":5,"title":"Очень мощный","text":"Быстро измельчает орехи и лёд, мощности с запасом.","verified_purchase":true},
+  {"review_id":"R-002-2","product_id":"DEMO-HK-002","rating":3,"title":"Громкий","text":"Работает шумно, стеклянная чаша тяжёлая.","verified_purchase":true},
+  {"review_id":"R-003-1","product_id":"DEMO-HK-003","rating":4,"title":"Хорош за свою цену","text":"Легко мыть, суп пюре делает быстро.","verified_purchase":true},
+  {"review_id":"R-003-2","product_id":"DEMO-HK-003","rating":3,"title":"Шумит","text":"На второй скорости шумный и быстро нагревается.","verified_purchase":true},
+  {"review_id":"R-004-1","product_id":"DEMO-HK-004","rating":5,"title":"Надёжный","text":"Быстро кипятит воду, металлический корпус легко чистить.","verified_purchase":true},
+  {"review_id":"R-005-1","product_id":"DEMO-HK-005","rating":5,"title":"Для ежедневной готовки","text":"Ровное дно и удобные ручки, легко моется.","verified_purchase":true},
+  {"review_id":"R-006-1","product_id":"DEMO-HK-006","rating":4,"title":"Без стекла","text":"Металлические крышки прочные, набор выглядит надёжным.","verified_purchase":true},
+  {"review_id":"R-007-1","product_id":"DEMO-HK-007","rating":5,"title":"Ничего не липнет","text":"Готовлю каждый день, покрытие легко мыть.","verified_purchase":true},
+  {"review_id":"R-008-1","product_id":"DEMO-HK-008","rating":5,"title":"Помогает от пыли","text":"После уборки стало меньше пыли, фильтр HEPA хорошо задерживает мелкую пыль.","verified_purchase":true},
+  {"review_id":"R-008-2","product_id":"DEMO-HK-008","rating":5,"title":"Собирает шерсть","text":"Турбощётка хорошо собирает шерсть и волосы с ковра.","verified_purchase":true},
+  {"review_id":"R-008-3","product_id":"DEMO-HK-008","rating":3,"title":"Нужно чистить фильтр","text":"Фильтр быстро забивается шерстью, после каждой уборки приходится чистить.","verified_purchase":true},
+  {"review_id":"R-009-1","product_id":"DEMO-HK-009","rating":4,"title":"Компактный","text":"Лёгкий и недорогой, но мелкую пыль фильтрует средне.","verified_purchase":true},
+  {"review_id":"R-010-1","product_id":"DEMO-HK-010","rating":5,"title":"Приятный хлопок","text":"Нет ворса и шерсти, ткань после стирки мягкая.","verified_purchase":true},
+  {"review_id":"R-011-1","product_id":"DEMO-HK-011","rating":5,"title":"Очень тёплое","text":"Шерстяное одеяло лёгкое и тёплое.","verified_purchase":true},
+  {"review_id":"R-EL1-1","product_id":"DEMO-EL-001","rating":5,"title":"Удобный длинный провод","text":"Защита от перегрузки работает, пяти розеток хватает.","verified_purchase":true}
+]
