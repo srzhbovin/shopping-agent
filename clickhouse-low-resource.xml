@@ -1,0 +1,13 @@
+<clickhouse>
+    <background_pool_size>4</background_pool_size>
+    <background_schedule_pool_size>4</background_schedule_pool_size>
+    <background_buffer_flush_schedule_pool_size>1</background_buffer_flush_schedule_pool_size>
+    <background_message_broker_schedule_pool_size>1</background_message_broker_schedule_pool_size>
+    <background_distributed_schedule_pool_size>1</background_distributed_schedule_pool_size>
+    <max_thread_pool_size>64</max_thread_pool_size>
+    <asynchronous_metric_log remove="1" />
+    <metric_log remove="1" />
+    <trace_log remove="1" />
+    <text_log remove="1" />
+    <processors_profile_log remove="1" />
+</clickhouse>

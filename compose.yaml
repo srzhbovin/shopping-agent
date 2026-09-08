@@ -24,6 +24,18 @@ services:
       EMBEDDING_MODEL: text-embedding-nomic-embed-text-v1.5
       LLM_BASE_URL: http://host.docker.internal:1234/api/v1
       LLM_MODEL: qwen/qwen3.5-4b
+      LLM_TIMEOUT_SECONDS: "${LLM_TIMEOUT_SECONDS:-55}"
+      LLM_MAX_OUTPUT_TOKENS: "${LLM_MAX_OUTPUT_TOKENS:-128}"
+      LLM_MAX_RETRIES: "${LLM_MAX_RETRIES:-1}"
+      PROMPT_PATH: /app/prompts
+      AGENT_MAX_STEPS: "${AGENT_MAX_STEPS:-12}"
+      AGENT_MAX_TOOL_CALLS: "${AGENT_MAX_TOOL_CALLS:-30}"
+      AGENT_TOKEN_BUDGET: "${AGENT_TOKEN_BUDGET:-1200}"
+      AGENT_TIMEOUT_SECONDS: "${AGENT_TIMEOUT_SECONDS:-90}"
+      AGENT_MAX_CRITIC_REVISIONS: "${AGENT_MAX_CRITIC_REVISIONS:-2}"
+      LANGFUSE_PUBLIC_KEY: "${LANGFUSE_PUBLIC_KEY:-}"
+      LANGFUSE_SECRET_KEY: "${LANGFUSE_SECRET_KEY:-}"
+      LANGFUSE_HOST: "${LANGFUSE_HOST:-http://host.docker.internal:3000}"
       AUTO_LOAD_DEMO: "true"
     volumes:
       - catalog_data:/app/data

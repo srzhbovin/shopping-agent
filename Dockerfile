@@ -15,6 +15,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 COPY src ./src
 COPY data/demo ./data/demo
+COPY prompts ./prompts
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev
 

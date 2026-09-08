@@ -3,9 +3,15 @@ from __future__ import annotations
 from contextlib import asynccontextmanager
 from typing import Any
 
-from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import JSONResponse, StreamingResponse
 
+from shopping_agent.agent_models import (
+    AgentRequest,
+    AgentResponse,
+    SessionSnapshot,
+    TraceRecord,
+)
 from shopping_agent.config import get_settings
 from shopping_agent.errors import (
     BudgetExceededError,
@@ -39,8 +45,8 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="Shopping Cart Agent",
-    version="0.1.0",
-    description="Проверяемые инструменты каталога для агента подбора корзины",
+    version="0.2.0",
+    description="Проверяемый товарный агент с локальной языковой моделью",
     lifespan=lifespan,
 )
 
@@ -72,6 +78,9 @@ def health(request: Request) -> dict[str, Any]:
         "catalog_products": current.catalog.count_products(),
         "indexed_products": current.indexed_products,
         "dense_index_ready": current.search_engine.vector_index.ready(),
+        "agent_ready": True,
+        "llm_model": get_settings().llm_model,
+        "langfuse_enabled": current.agent_service.observability.enabled,
         "warning": current.index_warning,
     }
 
@@ -123,3 +132,39 @@ def cart_ops(payload: CartOpsInput, request: Request) -> CartOpsOutput:
 @app.post("/demo/verify", response_model=DemoVerificationOutput)
 def demo_verify(request: Request) -> DemoVerificationOutput:
     return verify_demo(runtime(request))
+
+
+@app.post("/agent/run", response_model=AgentResponse)
+def run_agent(payload: AgentRequest, request: Request) -> AgentResponse:
+    return runtime(request).agent_service.run(payload)
+
+
+@app.post("/agent/stream")
+def stream_agent(payload: AgentRequest, request: Request) -> StreamingResponse:
+    service = runtime(request).agent_service
+
+    def event_stream():
+        yield 'event: accepted\ndata: {"message":"Запрос принят"}\n\n'
+        for item in service.stream(payload):
+            if isinstance(item, AgentResponse):
+                yield f"event: result\ndata: {item.model_dump_json()}\n\n"
+            else:
+                yield f"event: progress\ndata: {item.model_dump_json()}\n\n"
+
+    return StreamingResponse(event_stream(), media_type="text/event-stream")
+
+
+@app.get("/agent/sessions/{session_id}", response_model=SessionSnapshot)
+def get_agent_session(session_id: str, request: Request) -> SessionSnapshot:
+    snapshot = runtime(request).agent_service.get_session(session_id)
+    if snapshot is None:
+        raise HTTPException(status_code=404, detail="Сессия не найдена")
+    return snapshot
+
+
+@app.get("/agent/traces/{trace_id}", response_model=TraceRecord)
+def get_agent_trace(trace_id: str, request: Request) -> TraceRecord:
+    trace = runtime(request).agent_service.get_trace(trace_id)
+    if trace is None:
+        raise HTTPException(status_code=404, detail="Трасса не найдена")
+    return trace

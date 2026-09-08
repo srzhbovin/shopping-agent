@@ -73,11 +73,48 @@ def check_models() -> int:
     return 0 if result["llm_answer"].strip() == "OK" and dimensions > 0 else 1
 
 
+def verify_agent() -> int:
+    from shopping_agent.agent_models import AgentRequest
+    from shopping_agent.config import get_settings
+    from shopping_agent.runtime import build_runtime
+
+    current = build_runtime(get_settings())
+    result = current.agent_service.run(
+        AgentRequest(
+            message=(
+                "Собери набор для первого переезда в квартиру, бюджет 40000 рублей, "
+                "готовлю часто, аллергия на шерсть"
+            )
+        )
+    )
+    catalog_ids = {product.product_id for product in current.catalog.list_products()}
+    checks = {
+        "planner_used_local_model": result.plan.planner_mode in {"llm", "cache"},
+        "catalog_ids_only": all(item.product_id in catalog_ids for item in result.cart.items),
+        "within_budget": result.cart.within_budget,
+        "critic_ran": result.critique is not None,
+        "trace_saved": current.agent_service.get_trace(result.trace_id) is not None,
+    }
+    print(
+        json.dumps(
+            {"checks": checks, "result": result.model_dump(mode="json")},
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
+    return 0 if all(checks.values()) else 1
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=["verify", "reset-demo", "check-models"])
+    parser.add_argument("command", choices=["verify", "verify-agent", "reset-demo", "check-models"])
     args = parser.parse_args()
-    commands = {"verify": verify, "reset-demo": reset_demo, "check-models": check_models}
+    commands = {
+        "verify": verify,
+        "verify-agent": verify_agent,
+        "reset-demo": reset_demo,
+        "check-models": check_models,
+    }
     raise SystemExit(commands[args.command]())
 
 

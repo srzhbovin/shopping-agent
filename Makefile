@@ -1,4 +1,4 @@
-.PHONY: install lint test run up down verify check-models clean-data
+.PHONY: install lint test run up up-tracing down down-tracing verify verify-agent check-models clean-data
 
 install:
 	python -m pip install uv==0.12.10
@@ -17,11 +17,20 @@ run:
 up:
 	docker compose up --build -d
 
+up-tracing:
+	docker compose -f compose.yaml -f compose.langfuse.yaml up --build -d
+
 down:
 	docker compose down
 
+down-tracing:
+	docker compose -f compose.yaml -f compose.langfuse.yaml down
+
 verify:
 	python -m uv run shopping-agent verify
+
+verify-agent:
+	python -m uv run shopping-agent verify-agent
 
 check-models:
 	python -m uv run shopping-agent check-models
